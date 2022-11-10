@@ -1,11 +1,15 @@
+import neo
+
 # greedy algorithm
 #------------------------matrices stuff i stole from somewhere
 
+#[
 type
     Matrix = object
         #data: array[vertices, array[vertices, int]]
         Vertices: int
         data: seq[int]
+
 
 proc newMatrix*(vertices: int, d: openarray[int]): Matrix =
     result.Vertices = vertices
@@ -24,6 +28,8 @@ proc newMatrix*(vertices: int): Matrix =
 
 proc index(x: Matrix, row, column: int): int =
     return x.data[row*x.Vertices+column]
+
+]#
 
 #-----------------------matrices stuff i stole from somewhere
 
@@ -79,19 +85,7 @@ proc hamCycle*(self: Matrix): void =
         path[0] = s
         if hamCycleChecks(self, path, 1) == false:
             stdout.write ""
-    return 
 
-    
-
-
-
-var matrix1 = newMatrix(5, [0, 1, 0, 1, 0,
-                            1, 0, 1, 1, 1,
-                            0, 1, 0, 0, 1,
-                            1, 1, 0, 0, 1,
-                            0, 1, 1, 1, 0,])
-hamCycle(matrix1)
-#
 #
 #
 #var matrix2 = newMatrix(5, [0, 1, 0, 1, 0,
