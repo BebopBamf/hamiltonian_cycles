@@ -1,9 +1,21 @@
 import std/parseopt
 
-proc write_help() =
+import eatspork/backtrackingOne 
+
+let m = newMatrix(5, [0, 1, 0, 1, 0,
+                            1, 0, 1, 1, 1,
+                            0, 1, 0, 0, 1,
+                            1, 1, 0, 0, 1,
+                            0, 1, 1, 1, 0,])
+
+proc writeVersion() =
   echo("Hamiltonian Cycle Algorithms CLI")
-  echo("V 0.0.1")
+  echo("Version 0.0.1")
+
+proc writeHelp() =
+  writeVersion()
 
 when isMainModule:
   echo("Starting Algorithms!")
-  write_help()
+  writeHelp()
+  hamCycle(m)

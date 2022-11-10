@@ -1,8 +1,4 @@
 # greedy algorithm
-import std/lists
-
-#var path: seq[int]
-
 #------------------------matrices stuff i stole from somewhere
 
 type
@@ -11,7 +7,7 @@ type
         Vertices: int
         data: seq[int]
 
-proc newMatrix(vertices: int, d: openarray[int]): Matrix =
+proc newMatrix*(vertices: int, d: openarray[int]): Matrix =
     result.Vertices = vertices
     newSeq(result.data, vertices*vertices)
     if len(d)<(vertices*vertices):
@@ -20,7 +16,7 @@ proc newMatrix(vertices: int, d: openarray[int]): Matrix =
     for i in countup(0,vertices*vertices-1):
       result.data[i] = d[i]
 
-proc newMatrix(vertices: int): Matrix =
+proc newMatrix*(vertices: int): Matrix =
     result.Vertices = vertices
     newSeq(result.data, vertices*vertices)
     for i in countup(0,vertices*vertices-1):
@@ -72,7 +68,7 @@ proc hamCycleChecks(self: Matrix, path: var seq, position: int) : bool=
 
     return false
 
-proc hamCycle(self: Matrix): void = 
+proc hamCycle*(self: Matrix): void = 
     #create a empty path sequence and fill it with -1
     var path = newSeq[int](self.Vertices)
     for i in 0 .. self.Vertices-1:
