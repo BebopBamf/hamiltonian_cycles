@@ -4,3 +4,4 @@ report/build/hamiltonian_cycles/
 # Output Binaries
 code/main
 code/main.exe
+code/src/backtracking.exe
