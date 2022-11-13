@@ -133,7 +133,7 @@ proc isBinary(self: Matrix): bool=
             return false
     return true
 
-#test 1, refer to appendix in report for visual representation of graph
+#test 1, refer to report testing justificaiton for visual representation
 proc testMatrix(): void =
     var matrix1 = newMatrix(5, [0, 1, 0, 1, 0,
                                 1, 0, 1, 1, 1,
@@ -146,7 +146,43 @@ proc testMatrix(): void =
     else:
         echo "testMatrix Passed"
 
-#test 2, does not contain hamiltonian cycle
+proc testMatrix2(): void =
+    var matrix = newMatrix(5)
+    matrix.setData([0, 1, 1, 0, 1,
+                    1, 0, 1, 1, 1,
+                    1, 1, 0, 1, 0,
+                    0, 1, 1, 0, 1,
+                    1, 1, 0, 1, 0,])
+    if(containsHamCycle(matrix) == false):
+        echo "testMatrix2 Failed"
+    else:
+        echo "testMatrix2 Passed"
+
+proc testMatrix3(): void =
+    var matrix = newMatrix(5)
+    matrix.setData([0, 1, 1, 1, 0,
+                    1, 0, 1, 1, 1,
+                    1, 1, 0, 0, 1,
+                    1, 1, 0, 0, 1,
+                    0, 1, 1, 1, 0,])
+    if(containsHamCycle(matrix) == false):
+        echo "testMatrix3 Failed"
+    else:
+        echo "testMatrix3 Passed"
+
+proc testDirectedMatrix(): void =
+    var matrix = newMatrix(6, [0, 1, 0, 0, 1, 0,
+                                0, 0, 1, 0, 0, 0,
+                                0, 0, 0, 1, 0, 0,
+                                0, 0, 0, 0, 1, 1,
+                                0, 0, 1, 0, 0, 1,
+                                1, 0, 0, 0, 0, 0,])
+    if(containsHamCycle(matrix) == false):
+        echo "testDirectedMatrix1 Failed"
+    else:
+        echo "testDirectedMatrix1 Passed"
+
+#test, does not contain hamiltonian cycle
 proc testNoCycle(): void =
     var matrix2 = newMatrix(5, [0, 1, 0, 1, 0,
                                 1, 0, 1, 1, 1,
@@ -157,6 +193,35 @@ proc testNoCycle(): void =
         echo "testNoCycle Passed"
     else:
         echo "testNoCycle Failed"
+
+proc testNoCycle2(): void =
+    var matrix = newMatrix(8)
+    matrix.setData([0, 1, 0, 0, 0, 0, 0, 1,
+                    1, 0, 1, 0, 0, 0, 0, 0,
+                    0, 1, 0, 1, 0, 1, 0, 1,
+                    0, 0, 1, 0, 1, 0, 0, 0,
+                    0, 0, 0, 1, 0, 1, 0, 0,
+                    0, 0, 1, 0, 0, 0, 1, 0,
+                    0, 0, 0, 0, 0, 1, 0, 0,
+                    1, 0, 1, 0, 0, 0, 0, 0,])
+    if(containsHamCycle(matrix) == false):
+        echo "testNoCycle2 Passed"
+    else:
+        echo "testNoCycle2 Failed"
+
+proc testDirectedNoCycle(): void =
+    var matrix = newMatrix(7)
+    matrix.setData([0, 1, 0, 0, 0, 0, 1,
+                    0, 0, 1, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 1, 0,
+                    0, 0, 1, 0, 0, 0, 0,
+                    0, 0, 0, 1, 0, 0, 1,
+                    0, 1, 0, 1, 1, 0, 0,
+                    0, 0, 0, 0, 0, 1, 0,])
+    if(containsHamCycle(matrix) == false):
+        echo "testDirectedNoCycle Passed"
+    else:
+        echo "testDirectedNoCycle Failed"
 
 proc testEmptyMatrix(): void =
     var matrix = newMatrix(0)
@@ -173,7 +238,7 @@ proc testInvalidMatrix(): void =
                                 1, 1, 1,
                                 1, 1, 1,])
         hamCycle(matrix1)
-    except IndexError as e:
+    except IndexDefect as e:
         echo "testInvalidMatrix Passed"
 
 #------------------------------------------------------testing
@@ -198,11 +263,15 @@ matrix3.setData([0, 1, 1, 0, 1,
                 0, 1, 1, 0, 1,
                 1, 1, 0, 1, 0,])
 #hamCycle(matrix3)
-#hamCycleOneSol(matrix3)
-#hamCycleOneSol(matrix3)
+
 
 #tests
 testMatrix()
+testMatrix2()
+testMatrix3()
+testDirectedMatrix()
 testNoCycle()
+testNoCycle2()
+testDirectedNoCycle()
 testEmptyMatrix()
 testInvalidMatrix()
