@@ -77,7 +77,7 @@ proc initPath(self: Matrix): seq =
     return path
 
 proc containsHamCycle(self: Matrix): bool =
-    if self.vertices == 0:
+    if self.vertices == 0 or self.vertices == 1:
         return false
     
     var path = initPath(self)
@@ -92,8 +92,8 @@ proc containsHamCycle(self: Matrix): bool =
 
 proc hamCycleEveryPerm(self: Matrix): void =
     #check for empty adjacency matrix
-    if self.vertices == 0:
-        echo("No solutions in an empty graph", "\n")
+    if self.vertices == 0 or self.vertices == 1:
+        echo("No solutions", "\n")
         return
     
     var path = initPath(self)
@@ -109,8 +109,8 @@ proc hamCycleEveryPerm(self: Matrix): void =
 
 proc hamCycle(self: Matrix): void = 
     #check for empty adjacency matrix
-    if self.vertices == 0:
-        echo("No solutions in an empty graph", "\n")
+    if self.vertices == 0 or self.vertices == 1:
+        echo("No solutions", "\n")
         return
     
     var path = initPath(self)
@@ -241,6 +241,13 @@ proc testInvalidMatrix(): void =
     except IndexDefect as e:
         echo "testInvalidMatrix Passed"
 
+proc testSelfLoop(): void =
+    var matrix = newMatrix(1, [1])
+    if(containsHamCycle(matrix) == false):
+        echo "testEmptyMatrix Passed"
+    else:
+        echo "testEmptyMatrix Failed"
+
 #------------------------------------------------------testing
 
 
@@ -264,7 +271,6 @@ matrix3.setData([0, 1, 1, 0, 1,
                 1, 1, 0, 1, 0,])
 #hamCycle(matrix3)
 
-
 #tests
 testMatrix()
 testMatrix2()
@@ -275,3 +281,4 @@ testNoCycle2()
 testDirectedNoCycle()
 testEmptyMatrix()
 testInvalidMatrix()
+testSelfLoop()
