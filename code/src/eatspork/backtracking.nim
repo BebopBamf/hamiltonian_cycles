@@ -1,6 +1,6 @@
 import std/lists
 
-import graph
+import graph 
 
 proc isAdjacent(self: Matrix, v: int, position: int, path: seq): bool =
     #checks if the current node is already in the path
@@ -37,6 +37,28 @@ proc hamCycleChecks(self: Matrix, path: var seq, position: int) : bool=
             path[position] = -1
     return false
 
+proc hamCycleChecksOneSol(self: Matrix, path: var seq, position: int): bool =
+    #checks if the path is a cycle
+    
+    if position == self.vertices:
+        #if the last node and first node is adjacent, it is a cycle
+        if self.index(path[position-1], path[0]) == 1:
+            return true
+        else:
+            return false
+
+    for v in 1 .. self.vertices-1:
+        if isAdjacent(self, v, position, path) == true:
+            path[position] = v
+            
+            #Checks if the previous node and current node in the path are adjacent
+            if self.hamCycleChecksOneSol(path, position+1) == true:
+                return true
+            
+            #removes current node if it does not result in a solution
+            path[position] = -1
+    return false
+
 proc printSol(self: Matrix, path: seq): void =
     #for every vertex in the path, print the vertex
     stdout.write "    "
@@ -45,34 +67,60 @@ proc printSol(self: Matrix, path: seq): void =
     echo(path[0])
     return 
 
+proc initPath(self: Matrix): seq =
+    #create a empty path sequence and fill it with -1
+    var path = newSeq[int](self.vertices)
+    for i in 0 .. self.vertices-1:
+        path[i] = -1
+    
+    path[0] = 0
+    return path
+
+proc containsHamCycle(self: Matrix): bool =
+    if self.vertices == 0:
+        return false
+    
+    var path = initPath(self)
+
+    if self.hamCycleChecksOneSol(path, 1) == false:
+        #echo("Solution does not exist")
+        return false
+    
+    #self.printSol(path)
+    return true
+
+
+proc hamCycleEveryPerm(self: Matrix): void =
+    #check for empty adjacency matrix
+    if self.vertices == 0:
+        echo("No solutions in an empty graph", "\n")
+        return
+    
+    var path = initPath(self)
+    
+    #for every node in the graph, find all the hamiltonain cycles (including all permutations)
+    echo("The solutions are:")
+    for s in 0 .. self.vertices-1:
+        path[0] = s
+        if hamCycleChecks(self, path, 1) == false:
+            stdout.write ""
+    echo("no more solutions", "\n")
+    return
+
 proc hamCycle(self: Matrix): void = 
     #check for empty adjacency matrix
     if self.vertices == 0:
         echo("No solutions in an empty graph", "\n")
         return
-
-    #create a empty path sequence and fill it with -1
-    var path = newSeq[int](self.vertices)
-    for i in 0 .. self.vertices-1:
-        path[i] = -1
-
-    #for every node in the graph, find all the hamiltonain cycles (including all permutations)
-    #echo("The solutions are:")
-    #for s in 0 .. self.vertices-1:
-    #    path[0] = s
-    #    if hamCycleChecks(self, path, 1) == false:
-    #        stdout.write ""
-    #echo("no more solutions", "\n")
-    #return
+    
+    var path = initPath(self)
 
     #for every node in the graph, find all the hamiltonain cycles (no permutations)
-    path[0] = 0
     echo("The solutions are:")
     if hamCycleChecks(self, path, 1) == false:
         stdout.write ""
     echo("no more solutions", "\n")
     return
-
 
 #-----------------------------------------------------testing
 
@@ -92,7 +140,11 @@ proc testMatrix(): void =
                                 0, 1, 0, 0, 1,
                                 1, 1, 0, 0, 1,
                                 0, 1, 1, 1, 0,])
-    hamCycle(matrix1)
+    #hamCycle(matrix1)
+    if(containsHamCycle(matrix1) == false):
+        echo "testMatrix Failed"
+    else:
+        echo "testMatrix Passed"
 
 #test 2, does not contain hamiltonian cycle
 proc testNoCycle(): void =
@@ -101,11 +153,18 @@ proc testNoCycle(): void =
                                 0, 1, 0, 0, 1,
                                 1, 1, 0, 0, 0,
                                 0, 1, 1, 0, 0,])
-    hamCycle(matrix2)
+    if(containsHamCycle(matrix2) == false):
+        echo "testNoCycle Passed"
+    else:
+        echo "testNoCycle Failed"
 
 proc testEmptyMatrix(): void =
     var matrix = newMatrix(0)
-    hamCycle(matrix)
+    #hamCycle(matrix)
+    if(containsHamCycle(matrix) == false):
+        echo "testEmptyMatrix Passed"
+    else:
+        echo "testEmptyMatrix Failed"
 
 proc testInvalidMatrix(): void =
 
@@ -115,7 +174,7 @@ proc testInvalidMatrix(): void =
                                 1, 1, 1,])
         hamCycle(matrix1)
     except IndexError as e:
-        echo "invalid adjacency matrix has been caught"
+        echo "testInvalidMatrix Passed"
 
 #------------------------------------------------------testing
 
@@ -139,9 +198,11 @@ matrix3.setData([0, 1, 1, 0, 1,
                 0, 1, 1, 0, 1,
                 1, 1, 0, 1, 0,])
 #hamCycle(matrix3)
+#hamCycleOneSol(matrix3)
+#hamCycleOneSol(matrix3)
 
 #tests
-#testMatrix()
-#testNoCycle()
-#testEmptyMatrix()
-#testInvalidMatrix()
+testMatrix()
+testNoCycle()
+testEmptyMatrix()
+testInvalidMatrix()

@@ -1,7 +1,7 @@
 type
-    Matrix = object
-        vertices: int
-        data: seq[int]
+    Matrix* = object
+        vertices*: int
+        data*: seq[int]
 
 
 proc newMatrix*(verts: int, d: openarray[int]): Matrix =
@@ -41,7 +41,7 @@ proc setData*(self: var Matrix, d: openarray[int]) =
             raise newException(IndexError, "Unknown number found")  
         self.data[i] = d[i]
 
-proc index(self: Matrix, row, column: int): int =
+proc index*(self: Matrix, row, column: int): int =
     return self.data[row*self.vertices+column]
 #----------matrix related
 
