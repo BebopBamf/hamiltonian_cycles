@@ -1,6 +1,6 @@
 import std/parseopt
 
-import eatspork/backtrackingOne 
+import eatspork/backtracking 
 
 let m = newMatrix(5, [0, 1, 0, 1, 0,
                             1, 0, 1, 1, 1,
