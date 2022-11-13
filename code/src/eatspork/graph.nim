@@ -1,7 +1,7 @@
 type
-    Matrix = object
-        vertices: int
-        data: seq[int]
+    Matrix* = object
+        vertices*: int
+        data*: seq[int]
 
 
 proc newMatrix*(verts: int, d: openarray[int]): Matrix =
@@ -11,12 +11,12 @@ proc newMatrix*(verts: int, d: openarray[int]): Matrix =
 
     #checks if there is the correct amount of inputs in the adjacency matrix
     if len(d)<(verts*verts):
-        raise newException(IndexError, "insufficient data supplied in matrix constructor")
+        raise newException(IndexDefect, "insufficient data supplied in matrix constructor")
     
     #raises error if adjacency matrix is invalid (contains a number that isnt 0 or 1)
     for i in countup(0,verts*verts-1):
         if d[i] != 0 and d[i] != 1:
-            raise newException(IndexError, "Unknown number found")  
+            raise newException(IndexDefect, "Unknown number found")  
         result.data[i] = d[i]
 
 
@@ -33,15 +33,15 @@ proc newMatrix*(verts: int): Matrix =
 proc setData*(self: var Matrix, d: openarray[int]) =
     #checks if there is the correct amount of inputs in the adjacency matrix
     if len(d)<(self.vertices*self.vertices):
-      raise newException(IndexError, "insufficient data supplied in matrix constructor")
+      raise newException(IndexDefect, "insufficient data supplied in matrix constructor")
 
     #raises error if adjacency matrix is invalid (contains a number that isnt 0 or 1)
     for i in countup(0,self.vertices*self.vertices-1):
         if d[i] != 0 and d[i] != 1:
-            raise newException(IndexError, "Unknown number found")  
+            raise newException(IndexDefect, "Unknown number found")  
         self.data[i] = d[i]
 
-proc index(self: Matrix, row, column: int): int =
+proc index*(self: Matrix, row, column: int): int =
     return self.data[row*self.vertices+column]
 #----------matrix related
 
