@@ -1,34 +1,65 @@
+\newpage
+
 \section{Abstract}
 
-Let us write a nice intro here.
+\emph{Hamiltonian cycles} are a very interesting problem lining all
+undergraduate discrete mathematics textbooks. At a higher level, we understand
+them as complex to solve. Here we look at the problem and discuss intricate
+details that have allowed the development of relatively efficient but still
+exponential algorithms for solving Hamiltonian Cycles.
 
-\section{The Hamiltonian Cycle Problem}
+\section{Introduction}
 
-\subsection{Hamiltonian Paths and Hamiltonian Cycles}
+The \emph{Hamiltonian Cycle Problem} is a problem that has been known for a very
+long time to be hard. Hamiltonian Cycles are often used to study the fundamental
+theories and understanding of complexity theory.
+
+\subsection{Hamiltonian Paths and Hamiltonian Cycles Definition}
 
 The hamiltonian cycle is similar to that of the hamiltonian path where inside an
 undirected or directed graph, the hamiltonian path, also known as the traceable
 path, is a path that visits each vertex exactly once. However, differing to the
 hamiltonian path, the starting point and ending point of the path must also be
 adjacent to each other such that they are able to create a cycle using an
-available edge. 
+available edge.
+
+
+In figure 1, there are multiple paths inside the undirected graph that result in
+a hamiltonian path, but due to the requirement of needing to start with node
+$e$, there is no hamiltonian cycle since there is no edge that accomplishes the
+requirement of the starting node and ending node of the path to connect.
+
+Figure 2 shows an example of an undirected graph that includes a hamiltonian
+cycle as, starting with any node, such as $a$, allows for a path such as
+$abcfeda$ or $adefcba$, fulfilling the criteria of connecting the first and last
+nodes.
 
 \subsection{Mathematical Definition}
-
-Here we define a mathematically rigerous defintion\cite{Ros07}. This defintion
-is simply to add rigour to the defintion in order to construct mathematically
-sound proofs.
 
 \begin{definition}[Graph]
     A graph $G$ is a tuple with a set of verticies $V$ and edges $E$, with an
     edge connecting two verticies. Notated as $G = (V, E)$
 \end{definition}
 
-\begin{definition}[Simple Cycle]
-    A simple cycle is a path $x_0, x_1, ..., x_{n-1}, x_n$ of a graph
-    $G = (V, E)$ such that 
+\begin{definition}[Simple Cycle for Undirected Graphs \cite{Ros0701}]
+    Let $n$ be a nonnegative integer and $G$ an undirected graph. A path of
+    length $n$ from $u$ to $v$ in $G$ is a sequence of $n$ edges $e_1,...,e_n$
+    of $G$ for which there exists a sequence of $x_0 = u$, $x_1, ..., x_{n-1}$,
+    $x_n = v$ of vertices such that $e_i$ has for $i = 1, ..., n$, the endpoints
+
 \end{definition}
 
+\begin{definition}[Simple Cycle for Directed Graphs \cite{Ros0701}]
+    Let $n$ be a nonnegative integer and $G$ an undirected graph. A path of
+    length $n$ from $u$ to $v$ in $G$ is a sequence of $n$ edges $e_1,...,e_n$
+    of $G$ for which there exists a sequence of $x_0 = u$, $x_1, ..., x_{n-1}$,
+    $x_n = v$ of vertices such that $e_i$ has for $i = 1, ..., n$, the endpoints
+
+\end{definition}
+
+\begin{definition}[Hamiltonian Cycle \cite{Ros0702}]
+
+\end{definition}
 
 \begin{equation}
     x_0, x_1, ..., x_{n-1}, x_n
@@ -36,15 +67,48 @@ sound proofs.
 
 \subsection{The Hamiltonian Cycle Problem}
 
-The hamiltonian cycle problem can be expressed in many ways depending on whether
-you represent it as a decision problem (does a graph contain a hamiltonian
-cycle, yes or no?) or whether the algorithm should return the actual path.
+There are many variations of the Hamiltonian Cycle Problem.
 
-The hamiltonian cycle problem can be generally understood as does a graph
-contain a hamiltonian cycle. It can also be understood as a general case of the
-Travelling Salesman Problem, and algorithms that apply to the travelling
-salesman problem apply to the hamiltonian cycle problem. However the inverse is
-\emph{not} true.
+The decision problem Hamilton Cycle Problem would be to find if a hamiltonian
+cycle exists or not. The decision problem can be extended to what is generally
+understood as the hamiltonian path problem by returning the path if it exists.
+The decision problem is NP-complete. Another variation of the Hamiltonian Cycle
+Problem is to find how many hamiltonian cycles exist in a graph.
+
+Not all graphs have equivalent complexity. Some graphs are relatively trivial to
+solve in exact exponential time with very small, near polynomial bases. This
+property makes Hamiltonian Cycles an interesting problem to research when
+looking at a search space for algorithms that solve the hamiltonian cycle
+problem. Unrelated to our implementations in this report, it has been
+hypothesised that the hardest graphs to solve lie close to the bound
+$\frac{1}{2} v \cdot \ln(v)+\frac{1}{2} \ln(\ln(v))$ \cite{Szem2006}. It also
+has been shown through empirical methods \cite{Berg2021} that there exists
+graphs that are difficult to solve far away from this bound. 
+
+The \emph{Travelling Salesman Problem} is reducible to the Hamiltonian Cycle
+Problem by setting the weight of the graph to 1. As a direct result, many of the
+algorithms used to solve the hamiltonian cycle problem were originally intended
+as a solution to the travelling salesman problem.
+
+\subsection{Overview and Restrictions}
+
+Hamiltonian Cycles have been known for a long time to be solvable through a
+brute-force depth-first search. At the same time, this yields less efficient
+time complexity. Bellman\cite{Bell1962}, Held and Karp\cite{Karp1962} developed
+a dynamic programming algorithm for solving travelling salesman in exact
+exponential time that applies to the Hamiltonian Cycle Problem. It was shown
+after that not all graphs have equal complexity, and by restricting a graph to
+degree 3 \cite{Epps2007}, there exists an exact exponential bound with a near
+polynomial base, as long as the graph was restricted to having at most vertices
+with degree 3.
+
+\newpage
+
+\section{Algorithms}
+
+\subsection{Backtracking 1: Brute Force DFS}
+
+\subsection{Backtracking 2: Eppsteins Algorithm}
 
 \printbibliography
 
