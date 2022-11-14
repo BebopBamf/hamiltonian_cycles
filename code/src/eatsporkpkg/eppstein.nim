@@ -5,4 +5,9 @@ import graph
 
 # proc remove(v: index, w: index)
 
-proc hamCycleEpp*(graph : AdjList): AdjList = return @[]
+proc hamCycleEpp*(graph : AdjList): AdjList =
+    for a in graph:
+        if a.len < 2:
+            return @[]
+
+    raise newException(IOError, "Unimplemented")
