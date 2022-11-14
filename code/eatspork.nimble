@@ -1,15 +1,15 @@
 # Package
 
 version       = "0.1.0"
-author        = "Euan Mendoza"
+author        = "Euan Mendoza, Jonathan Nguyen"
 description   = "Algorithmic Solutions for the Hamiltonian Path Problem"
 license       = "MIT"
 srcDir        = "src"
 installExt    = @["nim"]
-bin           = @["main"]
+bin           = @["eatspork"]
 
 
 # Dependencies
 
 requires "nim >= 1.6.8"
-requires "neo >= 0.3.3"
+requires "zero_functional >= 1.3.0"

@@ -1,8 +1,13 @@
+type Vertex = uint
+
+type AdjList* = seq[seq[Vertex]]
+
+proc newAdjList*(adjList: seq[seq[uint]]): AdjList = adjList
+
 type
     Matrix* = object
         vertices*: int
         data*: seq[int]
-
 
 proc newMatrix*(verts: int, d: openarray[int]): Matrix =
     #places amount of verts into object instance

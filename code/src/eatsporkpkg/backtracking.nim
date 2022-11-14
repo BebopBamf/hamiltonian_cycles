@@ -107,7 +107,7 @@ proc hamCycleEveryPerm(self: Matrix): void =
     echo("no more solutions", "\n")
     return
 
-proc hamCycle(self: Matrix): void = 
+proc hamCycle*(self: Matrix): void = 
     #check for empty adjacency matrix
     if self.vertices == 0 or self.vertices == 1:
         echo("No solutions", "\n")
