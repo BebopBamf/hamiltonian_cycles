@@ -324,7 +324,6 @@ the next node. For example, given the following graph and adjacency matrix:
     \end{tabular}
 \end{table}
 
-
 \begin{table}[H]
     \centering
     \caption{Path Array}
@@ -336,6 +335,133 @@ the next node. For example, given the following graph and adjacency matrix:
 \end{table}
 
 As 4 is not a valid adjacent node, it will try incrementing again.
+
+\begin{table}[H]
+    \centering
+    \caption{Path Array}
+    \begin{tabular}{l | lllll}
+        index & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        value & 1 & 2 & 3 & 5 &  \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l | lllll}
+          & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        0 & 0 & 1 & 1 & 0 & 1  \\
+        1 & 1 & 0 & 1 & 1 & 1  \\
+        2 & 1 & 1 & 0 & 1 & 0  \\
+        3 & 0 & 1 & 1 & 0 & {\cellcolor[rgb]{0.933,0.804,0.804}}1  \\
+        4 & 1 & 1 & 0 & 1 & 0 
+    \end{tabular}
+\end{table}
+
+As 5 is adjacent to the previous node (node 3), it is valid and will continue
+until the array is complete.
+
+\textbf{Array Complete:}
+
+With reference to graph 1 again, upon completing the array, the path array will look like the following:
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics{image3}
+    \caption{Graph 1: Undirected Graph}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics{image14}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l | lllll}
+          & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        0 & 0 & 1 & 1 & 0 & 1  \\
+        1 & 1 & 0 & 1 & 1 & 1  \\
+        2 & 1 & 1 & 0 & 1 & 0  \\
+        3 & 0 & {\cellcolor[rgb]{0.863,0.914,0.835}}1 & 1 & 0 & 1  \\
+        4 & 1 & 1 & 0 & 1 & 0 
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Path Array}
+    \begin{tabular}{l | lllll}
+        index & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        value & 1 & 2 & 3 & 4 & 5 \\
+    \end{tabular}
+\end{table}
+
+Where it will also test if the last node (node 5) is adjacent to the first node
+(node 1), thus fulfilling the criteria of a hamiltonian cycle.
+
+However, as we want to find every single path that results in a hamiltonian
+cycle, the algorithm will begin to “backtrack”.
+
+As there is no node after 5, it will remove the last node in the array and
+attempt to increment the previous node.
+
+\begin{table}[H]
+    \centering
+    \caption{Path Array}
+    \begin{tabular}{l | lllll}
+        index & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        value & 1 & 2 & 3 & {\cellcolor[rgb]{0.933,0.804,0.804}}5 &  \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l | lllll}
+          & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        0 & 0 & 1 & 1 & 0 & 1  \\
+        1 & 1 & 0 & 1 & 1 & 1  \\
+        2 & 1 & 1 & 0 & 1 & 0  \\
+        3 & 0 & 1 & 1 & 0 & 1  \\
+        4 & 1 & 1 & {\cellcolor[rgb]{0.933,0.804,0.804}}0 & 1 & 0 
+    \end{tabular}
+\end{table}
+
+However, as 5 is not adjacent to 3 and is also the last node, we will remove the
+node and attempt to increment the previous node.
+
+Since there is a valid adjacency between 2 and 4, we will move onto the next
+node again. This will repeat recursively, testing if there is an invalid
+adjacency or not, thus finding every single hamiltonian cycle in the graph.
+
+\begin{table}[H]
+    \centering
+    \caption{Path Array}
+    \begin{tabular}{l | lllll}
+        index & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        value & 1 & 2 & {\cellcolor[rgb]{0.863,0.914,0.835}}4 &  &  \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l | lllll}
+          & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        0 & 0 & 1 & 1 & 0 & 1  \\
+        1 & 1 & 0 & 1 & 1 & 1  \\
+        2 & 1 & 1 & 0 & 1 & 0  \\
+        3 & 0 & {\cellcolor[rgb]{0.933,0.804,0.804}}1 & 1 & 0 & 1  \\
+        4 & 1 & 1 & 0 & 1 & 0 
+    \end{tabular}
+\end{table}
+
 
 \subsection{Backtracking 2: Eppsteins Algorithm}
 
