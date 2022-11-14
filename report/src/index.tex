@@ -12,7 +12,9 @@ exponential algorithms for solving Hamiltonian Cycles.
 
 The \emph{Hamiltonian Cycle Problem} is a problem that has been known for a very
 long time to be hard. Hamiltonian Cycles are often used to study the fundamental
-theories and understanding of complexity theory.
+theories and understanding of complexity theory. Here we assume graphs are
+undirected, the conversion from undirected to directed graphs is not difficult
+however.
 
 \subsection{Hamiltonian Paths and Hamiltonian Cycles Definition}
 
@@ -22,7 +24,6 @@ path, is a path that visits each vertex exactly once. However, differing to the
 hamiltonian path, the starting point and ending point of the path must also be
 adjacent to each other such that they are able to create a cycle using an
 available edge.
-
 
 In figure 1, there are multiple paths inside the undirected graph that result in
 a hamiltonian path, but due to the requirement of needing to start with node
@@ -41,29 +42,31 @@ nodes.
     edge connecting two verticies. Notated as $G = (V, E)$
 \end{definition}
 
-\begin{definition}[Simple Cycle for Undirected Graphs \cite{Ros0701}]
+\begin{definition}[Path for Undirected Graphs \cite{Ros0701}]
     Let $n$ be a nonnegative integer and $G$ an undirected graph. A path of
     length $n$ from $u$ to $v$ in $G$ is a sequence of $n$ edges $e_1,...,e_n$
     of $G$ for which there exists a sequence of $x_0 = u$, $x_1, ..., x_{n-1}$,
     $x_n = v$ of vertices such that $e_i$ has for $i = 1, ..., n$, the endpoints
-
+    $x_{i-1}$ and $x_i$.
 \end{definition}
 
-\begin{definition}[Simple Cycle for Directed Graphs \cite{Ros0701}]
-    Let $n$ be a nonnegative integer and $G$ an undirected graph. A path of
-    length $n$ from $u$ to $v$ in $G$ is a sequence of $n$ edges $e_1,...,e_n$
-    of $G$ for which there exists a sequence of $x_0 = u$, $x_1, ..., x_{n-1}$,
-    $x_n = v$ of vertices such that $e_i$ has for $i = 1, ..., n$, the endpoints
-
+\begin{definition}[A Cycle \cite{Ros0701}]
+    A graph has a cycle if it has a path where $u = v$.
 \end{definition}
+
+\begin{definition}[A Simple Cycle or Path \cite{Ros0701}]
+    A path or cycle is simple if all its edges appear in the path only once.
+\end{definition}
+
 
 \begin{definition}[Hamiltonian Cycle \cite{Ros0702}]
-
+    A Hamiltonian Cycle is a simple cycle that visits all the vertices in a
+    graph.
 \end{definition}
 
-\begin{equation}
-    x_0, x_1, ..., x_{n-1}, x_n
-\end{equation}
+\begin{definition}[Forced Edge \cite{Epps2007}]
+    A edge is forced if it must appear in the Hamiltonian Cycle.
+\end{definition}
 
 \subsection{The Hamiltonian Cycle Problem}
 
@@ -110,5 +113,9 @@ with degree 3.
 
 \subsection{Backtracking 2: Eppsteins Algorithm}
 
-\printbibliography
+By considering possible permutations of a graph with degree 3. Eppstein was able
+to develop an algorithm that had the time-complexity $O(2^{\frac{3n}{8}})$ and
+in linear space \cite{Epps2007}. The algorithm was a careful backtracking
+technique that identified all possible permutations of a cubic graph and defined
+a set of back tracking rules.
 
