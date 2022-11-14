@@ -1,4 +1,4 @@
-type Vertex = uint
+type Vertex* = uint
 
 type AdjList* = seq[seq[Vertex]]
 
