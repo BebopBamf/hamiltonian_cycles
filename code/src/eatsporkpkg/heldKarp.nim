@@ -1,39 +1,38 @@
 import graph
 
-proc hamCycleHeldKarp*(startNode: int, graph: Matrix): Matrix =
-    let n = graph.vertex
+proc hamCycleHeldKarp*(startNode: int, g: Matrix): Matrix =
+    let n = g.vertices
 
-    let finishedState = (1 << n) - 1
+    let finishedState = (1 shl n) - 1
 
-    let state = 1 << startNode
-    var memo: array[n, array[1 << n, int]]
-    var prev: array[n, array[1 << n, int]]
+    let state = 1 shl startNode
+    var memo = newSeqUninitialized[int](n * (1 shl n))
+    var prev = newSeqUninitialized[int](n * (1 shl n))
 
-    proc findPath(i: int, state: int):
-        if (state == finishedState):
-            return index(graph, i, startNode)
+    proc findPath(i: int, state: int): int =
+        if state == finishedState:
+            return index(g, i, startNode)
 
-        if (memo[i][state] != nil):
-            return memo[i][state]
+        if memo[i * n + state].isNil:
+            return memo[i * n + state]
 
         var minDistance = high(int)
         var index = -1
         for next in 0..n:
-            if (state & (1 << next) != 0):
+            if (state and (1 shl next)) != 0:
                 continue
             
-            let nextState = state | (1 << next)
-            let nextDistance = distance[i][next] + findPath(next, nextState)
+            let nextState = state or (1 shl next)
+            let nextDistance = index(g, i, next) + findPath(next, nextState)
             if (nextDistance < minDistance):
                 minDistance = nextDistance
                 index = next
             
-        prev[i][state] = index
-        memo[i][state] = minDistance
-        return memo[i][state]
+        prev[i*n + state] = index
+        memo[i*n + state] = minDistance
+        return memo[i*n + state]
 
     let distance = findPath(startNode, state)
     var idx = startNode
     
-    var hamPath: Matrix = newMatrix
-    while true:
+    var hamPath: Matrix = newMatrix()

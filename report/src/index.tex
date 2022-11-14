@@ -25,6 +25,10 @@ hamiltonian path, the starting point and ending point of the path must also be
 adjacent to each other such that they are able to create a cycle using an
 available edge.
 
+\begin{center}
+    \includegraphics[width=\textwidth]{image2}
+\end{center}
+
 In figure 1, there are multiple paths inside the undirected graph that result in
 a hamiltonian path, but due to the requirement of needing to start with node
 $e$, there is no hamiltonian cycle since there is no edge that accomplishes the
@@ -111,6 +115,228 @@ with degree 3.
 
 \subsection{Backtracking 1: Brute Force DFS}
 
+The backtracking algorithm is a brute-force approach to problem solving and
+involves “backtracking” if the current solution is not suitable. That is, the
+algorithm attempts to recursively build a solution, one step at a time, and if
+the resulting solution fails, another solution will be found by trying another
+solution and/or moving one step back, eventually finding every single solution
+to the problem.
+
+In regards to the hamiltonian cycle problem:
+
+\textbf{Step 0:}
+
+We first create an adjacency matrix to the undirected graph to make finding the
+hamiltonian cycle easier. This involves writing ‘1’ where there is a connection
+between the next vertex, and ‘0’ where there is none.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=8cm]{image3}
+    \caption{Example Graph 1. Undirected Graph}
+    \label{fig:a}
+\end{figure}
+
+\begin{table}[h]
+    \centering
+    \caption{Example Adjacency Matrix}
+    \begin{tabular}{l | lllll}
+          & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        0 & 0 & 1 & 1 & 0 & 1  \\
+        1 & 1 & 0 & 1 & 1 & 1  \\
+        2 & 1 & 1 & 0 & 1 & 0  \\
+        3 & 0 & 1 & 1 & 0 & 1  \\
+        4 & 1 & 1 & 0 & 1 & 0 
+    \end{tabular}
+\end{table}
+
+\textbf{Step 1:}
+
+We will first create an empty array to store the hamiltonian path.
+
+\begin{table}[H]
+    \centering
+    \caption{Path Array}
+    \begin{tabular}{l | lllll}
+        index & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        value &   &   &   &   &    \\
+    \end{tabular}
+\end{table}
+
+\textbf{Step 2:}
+
+We will then fill in the first node in the graph.
+
+\begin{table}[H]
+    \centering
+    \caption{Path Array}
+    \begin{tabular}{l | lllll}
+        index & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        value & 1 &   &   &   &    \\
+    \end{tabular}
+\end{table}
+
+This will result in the following path.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4cm]{image18}
+\end{figure}
+
+\textbf{Step 3:}
+
+We will then attempt to increment the next node into the array.
+
+\begin{table}[H]
+    \centering
+    \caption{Path Array}
+    \begin{tabular}{l | lllll}
+        index & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        value & 1 & {\cellcolor[rgb]{0.933,0.804,0.804}}1 &   &   &    \\
+    \end{tabular}
+\end{table}
+
+However, since 1 is already in the path, the value will be incremented again.
+
+\begin{table}[H]
+    \centering
+    \caption{Path Array}
+    \begin{tabular}{l | lllll}
+        index & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        value & 1 & 2 &   &   &    \\
+    \end{tabular}
+\end{table}
+
+This new value will then be compared against the adjacency matrix to check if
+the previous node (node 1) is adjacent to the current node (node 2).
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l | lllll}
+          & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        0 & 0 & {\cellcolor[rgb]{0.863,0.914,0.835}}1 & 1 & 0 & 1  \\
+        1 & 1 & 0 & 1 & 1 & 1  \\
+        2 & 1 & 1 & 0 & 1 & 0  \\
+        3 & 0 & 1 & 1 & 0 & 1  \\
+        4 & 1 & 1 & 0 & 1 & 0 
+    \end{tabular}
+\end{table}
+
+As there is a ‘1’ in the adjacency matrix when matching node 1 with node 2, this
+means that the path is valid, making the following path:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4cm]{image11}
+\end{figure}
+
+\textbf{Step 4:}
+
+To show this again, the same steps will be repeated with index 3.
+We will then attempt to increment the next node into the array.
+
+\begin{table}[H]
+    \centering
+    \caption{Path Array}
+    \begin{tabular}{l | lllll}
+        index & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        value & 1 & 2 & {\cellcolor[rgb]{0.933,0.804,0.804}}1 &   &    \\
+    \end{tabular}
+\end{table}
+
+However, since 1 is already in the path, the value will be incremented again.
+
+\begin{table}[H]
+    \centering
+    \caption{Path Array}
+    \begin{tabular}{l | lllll}
+        index & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        value & 1 & 2 & {\cellcolor[rgb]{0.933,0.804,0.804}}2 &   &    \\
+    \end{tabular}
+\end{table}
+
+However, since 2 is already in the path, the value will be incremented again.
+
+\begin{table}[H]
+    \centering
+    \caption{Path Array}
+    \begin{tabular}{l | lllll}
+        index & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        value & 1 & 2 & 3 &   &    \\
+    \end{tabular}
+\end{table}
+
+This new value will then be compared against the adjacency matrix to check if
+the previous node (node 2) is adjacent to the current node (node 3).
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l | lllll}
+          & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        0 & 0 & 1 & 1 & 0 & 1  \\
+        1 & 1 & 0 & 1 & 1 & 1  \\
+        2 & 1 & {\cellcolor[rgb]{0.863,0.914,0.835}}1 & 0 & 1 & 0  \\
+        3 & 0 & 1 & 1 & 0 & 1  \\
+        4 & 1 & 1 & 0 & 1 & 0 
+    \end{tabular}
+\end{table}
+
+As there is a ‘1’ in the adjacency matrix when matching node 2 with node 3, this
+means that the path is valid, making the following graph:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics{image17}
+\end{figure}
+
+This will be continued until it fills in the entire array. An issue that can
+occur is if the new node is invalid, in which it will just increment and test
+the next node. For example, given the following graph and adjacency matrix:
+
+\textbf{Invalid Adjacency}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics{image8}
+    \caption{Example Graph 2: Invalid Adjacency}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l | lllll}
+          & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        0 & 0 & 1 & 1 & 0 & 1  \\
+        1 & 1 & 0 & 1 & 1 & 1  \\
+        2 & 1 & 1 & 0 & 1 & 0  \\
+        3 & 0 & 1 & 1 & {\cellcolor[rgb]{0.933,0.804,0.804}}0 & 1  \\
+        4 & 1 & 1 & 0 & 1 & 0 
+    \end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+    \centering
+    \caption{Path Array}
+    \begin{tabular}{l | lllll}
+        index & 0 & 1 & 2 & 3 & 4  \\
+        \hline
+        value & 1 & 2 & 3 & {\cellcolor[rgb]{0.933,0.804,0.804}}4 &  \\
+    \end{tabular}
+\end{table}
+
+As 4 is not a valid adjacent node, it will try incrementing again.
+
 \subsection{Backtracking 2: Eppsteins Algorithm}
 
 By considering possible permutations of a graph with degree 3. Eppstein was able
@@ -118,4 +344,6 @@ to develop an algorithm that had the time-complexity $O(2^{\frac{3n}{8}})$ and
 in linear space \cite{Epps2007}. The algorithm was a careful backtracking
 technique that identified all possible permutations of a cubic graph and defined
 a set of back tracking rules.
+
+\subsection{Dynamic Programming: Held-Karps Algorithm}
 

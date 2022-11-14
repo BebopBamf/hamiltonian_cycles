@@ -1,6 +1,6 @@
 import unittest
 
-import eatsporkpkg/eppstein
+# import eatsporkpkg/eppstein
 import eatsporkpkg/graph
 
 #[
@@ -24,14 +24,11 @@ test "fails with degree 0 and 1 vertex":
 
 ]#
 
-let matrix1 = newMatrix(5, [0, 1, 0, 1, 0,
-                                1, 0, 1, 1, 1,
-                                0, 1, 0, 0, 1,
-                                1, 1, 0, 0, 1,
-                                0, 1, 1, 1, 0,])
-    #hamCycle(matrix1)
-    if(containsHamCycle(matrix1) == false):
-        echo "testMatrix Failed"
-    else:
-        echo "testMatrix Passed"
-
+let matrix1 = newMatrix(5, [
+    0, 1, 0, 1, 0,
+    1, 0, 1, 1, 1,
+    0, 1, 0, 0, 1,
+    1, 1, 0, 0, 1,
+    0, 1, 1, 1, 0,]
+)
+   
