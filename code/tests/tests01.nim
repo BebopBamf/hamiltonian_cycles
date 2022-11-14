@@ -5,9 +5,9 @@ import eatsporkpkg/graph
 
 # Simple graph with a vertex of degree 0
 let graphv0 = newAdjList(@[@[], @[2u], @[1u]])
-
 let graphv1 = newAdjList(@[@[1u], @[0u, 2u], @[1u]])
 
+# Sample graph with degree 2 vertices
 let graphv2 = newAdjList(@[@[1u, 2u], @[0u, 2u], @[0u, 1u]])
 
 # Simple graph with a vertex of degree 1

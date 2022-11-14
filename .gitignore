@@ -2,8 +2,8 @@
 report/build/hamiltonian_cycles/
 
 # Output Binaries
-code/main
-code/main.exe
+code/eatspork
+code/eatspork.exe
 code/src/backtracking.exe
 code/src/eatspork/backtracking.exe
 code/tests/tests01

@@ -1,4 +1,11 @@
+import std/tables
+import std/intsets
+
 type Vertex* = uint
+
+type AdjTable* = Table[int, IntSet]
+
+proc newAdjTable*(dict: seq[(int, IntSet)]): AdjTable = newTable(dict)
 
 type AdjList* = seq[seq[Vertex]]
 
