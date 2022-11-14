@@ -1,15 +1,13 @@
 import std/tables
-import std/intsets
 
-type Vertex* = uint
+import zero_functional
 
-type AdjTable* = Table[int, IntSet]
+type Vertex* = int
+type EdgeSet* = seq[int]
 
-proc newAdjTable*(dict: seq[(int, IntSet)]): AdjTable = newTable(dict)
+type AdjTable* = Table[Vertex, EdgeSet]
 
-type AdjList* = seq[seq[Vertex]]
-
-proc newAdjList*(adjList: seq[seq[uint]]): AdjList = adjList
+proc newAdjTable*(dict: openArray[(Vertex, EdgeSet)]): AdjTable = toTable(dict)
 
 type
     Matrix* = object
