@@ -471,5 +471,86 @@ in linear space \cite{Epps2007}. The algorithm was a careful backtracking
 technique that identified all possible permutations of a cubic graph and defined
 a set of back tracking rules.
 
+Eppsteins algorithm looks like as follows.
+
+$\text{let } G$ be a graph.
+$\text{let } F$ be the forced edges of a graph.
+
+\begin{enumerate}
+    \item Repeat until they return or they can no longer be applied.
+    \begin{enumerate}
+        \item If $\text{degree}(G) < 2$, return empty set $E$.
+        \item If $F$ has three edges meeting at a vertex, return empty set $E$.
+        \item If $F$ has a non hamiltonian cycle, return empty set $E$.
+        \item If $F$ has a hamiltonian cycle for $G$ return cycle.
+        \item If $G$ has a vertex $v$ where $\text{degree}(v) == 2$. Add the
+            edges of $v$ to $F$.
+        \item If $G$ has a triangle subgraph with vertices $xyz$, and the
+            non-triangle edge incedent to $x \in F$. Add edge $yz$ to $F$.
+        \item If $G$ has exactly two edges meeting at a vertex, remove from
+            vertex $G$, and all edges incedent. Replace the edges with a single
+            edge connecting the endpoints. If this leads to parallel edges of
+            $G$ remove other edge from $G$.
+    \end{enumerate}
+    \item If $|F| > 0$, let $xy$ be any edge in $F$, and $yz$ be an adjacent
+        edge in $G \setminus F$. Else, let $yz$ be any edge in $G$.
+    \item Call algorithm recursively on $G, F \cup \{yz\}$
+    \item Call algorithm recursively on $G \setminus \{y,z\}, F$
+\end{enumerate}
+
 \subsection{Dynamic Programming: Held-Karps Algorithm}
+
+\newpage
+
+\section{Theoretical Complexity}
+
+\subsection{Backtracking 1: Brute Force DFS}
+
+\begin{lemma}
+    The depth first search has a running time of $O(n!)$, and a space complexity
+    of $O(n)$.
+\end{lemma}
+
+\begin{proof}
+    The algorithm is a recursive Depth First Search on the Graph. Since the
+    depth first search needs to search all possible permutations of the graph,
+    and there are $n!$ permutations of paths in a graph. The algorithm searches
+    $n!$ paths. The space is required to store the actual path, and to store the
+    graph itself.
+
+    The steps 1 and 2 occur in constant time. While the recursive steps occur
+    for the remaining possible graphs.
+\end{proof}
+
+\subsection{Backtracking 2: Eppsteins Algorithm}
+
+\begin{lemma}
+    The depth first search has a running time of $O(2^{\frac{3n}{8}})$.
+\end{lemma}
+
+\begin{proof}
+    Much like the depth first backtracking, this algorithm checks all possible
+    permutations of the graph. However, Eppstein proved that there are at most
+    $2^{\frac{3n}{8}}$ possible permutations of a cubic graph. Hence, if you
+    backtrack by only checking the possible permutations, you will achieve that
+    lower bound.
+\end{proof}
+
+\subsection{Dynamic Algorithm: Held-Karp}
+
+\begin{lemma}
+    Held-Karps algorithm has a complexity of $O(n^2 \cdot 2^n)$ and a space
+    complexity of $O(n\cdot2^n)$.
+\end{lemma}
+
+\begin{proof}
+    Due to the nature of results being memoised, instead of trying to find the
+    amount of combinations of paths in the set of edges. Instead you try to find
+    how many paths in the subset of paths that haven't been checked yet. Through
+    expanding the formula for permutation, the complexity can be written as
+    $O(n^2\cdot2^n)$
+
+    Similarly storing possible values for subsets requires $O(n \cdot 2^n)$
+    space.
+\end{proof}
 
