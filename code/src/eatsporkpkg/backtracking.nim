@@ -76,7 +76,7 @@ proc initPath(self: Matrix): seq =
     path[0] = 0
     return path
 
-proc containsHamCycle(self: Matrix): bool =
+proc containsHamCycle*(self: Matrix): bool =
     if self.vertices == 0 or self.vertices == 1:
         return false
     
@@ -90,7 +90,7 @@ proc containsHamCycle(self: Matrix): bool =
     return true
 
 
-proc hamCycleEveryPerm(self: Matrix): void =
+proc hamCycleEveryPerm*(self: Matrix): void =
     #check for empty adjacency matrix
     if self.vertices == 0 or self.vertices == 1:
         echo("No solutions", "\n")
@@ -121,164 +121,3 @@ proc hamCycle*(self: Matrix): void =
         stdout.write ""
     echo("no more solutions", "\n")
     return
-
-#-----------------------------------------------------testing
-
-#check adjacency matrix validity: contains only 1s and 0s
-proc isBinary(self: Matrix): bool=
-    #for every input data in the matrix, check if it is a 0 or 1, if it isnt, return false
-    for i in countup(0,self.vertices*self.vertices-1):
-        if self.data[i] != 0 and self.data[i] != 1:
-            echo("Unknown number found in adjacency matrix")
-            return false
-    return true
-
-#test 1, refer to report testing justificaiton for visual representation
-proc testMatrix(): void =
-    var matrix1 = newMatrix(5, [0, 1, 0, 1, 0,
-                                1, 0, 1, 1, 1,
-                                0, 1, 0, 0, 1,
-                                1, 1, 0, 0, 1,
-                                0, 1, 1, 1, 0,])
-    #hamCycle(matrix1)
-    if(containsHamCycle(matrix1) == false):
-        echo "testMatrix Failed"
-    else:
-        echo "testMatrix Passed"
-
-proc testMatrix2(): void =
-    var matrix = newMatrix(5)
-    matrix.setData([0, 1, 1, 0, 1,
-                    1, 0, 1, 1, 1,
-                    1, 1, 0, 1, 0,
-                    0, 1, 1, 0, 1,
-                    1, 1, 0, 1, 0,])
-    if(containsHamCycle(matrix) == false):
-        echo "testMatrix2 Failed"
-    else:
-        echo "testMatrix2 Passed"
-
-proc testMatrix3(): void =
-    var matrix = newMatrix(5)
-    matrix.setData([0, 1, 1, 1, 0,
-                    1, 0, 1, 1, 1,
-                    1, 1, 0, 0, 1,
-                    1, 1, 0, 0, 1,
-                    0, 1, 1, 1, 0,])
-    if(containsHamCycle(matrix) == false):
-        echo "testMatrix3 Failed"
-    else:
-        echo "testMatrix3 Passed"
-
-proc testDirectedMatrix(): void =
-    var matrix = newMatrix(6, [0, 1, 0, 0, 1, 0,
-                                0, 0, 1, 0, 0, 0,
-                                0, 0, 0, 1, 0, 0,
-                                0, 0, 0, 0, 1, 1,
-                                0, 0, 1, 0, 0, 1,
-                                1, 0, 0, 0, 0, 0,])
-    if(containsHamCycle(matrix) == false):
-        echo "testDirectedMatrix1 Failed"
-    else:
-        echo "testDirectedMatrix1 Passed"
-
-#test, does not contain hamiltonian cycle
-proc testNoCycle(): void =
-    var matrix2 = newMatrix(5, [0, 1, 0, 1, 0,
-                                1, 0, 1, 1, 1,
-                                0, 1, 0, 0, 1,
-                                1, 1, 0, 0, 0,
-                                0, 1, 1, 0, 0,])
-    if(containsHamCycle(matrix2) == false):
-        echo "testNoCycle Passed"
-    else:
-        echo "testNoCycle Failed"
-
-proc testNoCycle2(): void =
-    var matrix = newMatrix(8)
-    matrix.setData([0, 1, 0, 0, 0, 0, 0, 1,
-                    1, 0, 1, 0, 0, 0, 0, 0,
-                    0, 1, 0, 1, 0, 1, 0, 1,
-                    0, 0, 1, 0, 1, 0, 0, 0,
-                    0, 0, 0, 1, 0, 1, 0, 0,
-                    0, 0, 1, 0, 0, 0, 1, 0,
-                    0, 0, 0, 0, 0, 1, 0, 0,
-                    1, 0, 1, 0, 0, 0, 0, 0,])
-    if(containsHamCycle(matrix) == false):
-        echo "testNoCycle2 Passed"
-    else:
-        echo "testNoCycle2 Failed"
-
-proc testDirectedNoCycle(): void =
-    var matrix = newMatrix(7)
-    matrix.setData([0, 1, 0, 0, 0, 0, 1,
-                    0, 0, 1, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 1, 0,
-                    0, 0, 1, 0, 0, 0, 0,
-                    0, 0, 0, 1, 0, 0, 1,
-                    0, 1, 0, 1, 1, 0, 0,
-                    0, 0, 0, 0, 0, 1, 0,])
-    if(containsHamCycle(matrix) == false):
-        echo "testDirectedNoCycle Passed"
-    else:
-        echo "testDirectedNoCycle Failed"
-
-proc testEmptyMatrix(): void =
-    var matrix = newMatrix(0)
-    #hamCycle(matrix)
-    if(containsHamCycle(matrix) == false):
-        echo "testEmptyMatrix Passed"
-    else:
-        echo "testEmptyMatrix Failed"
-
-proc testInvalidMatrix(): void =
-
-    try:
-        var matrix1 = newMatrix(3, [3, 7, 5,
-                                1, 1, 1,
-                                1, 1, 1,])
-        hamCycle(matrix1)
-    except IndexDefect as e:
-        echo "testInvalidMatrix Passed"
-
-proc testSelfLoop(): void =
-    var matrix = newMatrix(1, [1])
-    if(containsHamCycle(matrix) == false):
-        echo "testEmptyMatrix Passed"
-    else:
-        echo "testEmptyMatrix Failed"
-
-#------------------------------------------------------testing
-
-
-#main code area ------v
-
-#method 1: 
-#initialise a new matrix using:
-#var matrixName = newMatrix(number of verts, [the adjacency matrix]), e.g.
-var matrix1 = newMatrix(3, [1, 1, 1,
-                            1, 1, 1,
-                            1, 1, 1,])
-#hamCycle(matrix1)
-
-#method 2: initialise a new matrix(number of verts)
-var matrix3 = newMatrix(5)
-#and then set the data afterwards
-matrix3.setData([0, 1, 1, 0, 1,
-                1, 0, 1, 1, 1,
-                1, 1, 0, 1, 0,
-                0, 1, 1, 0, 1,
-                1, 1, 0, 1, 0,])
-#hamCycle(matrix3)
-
-#tests
-testMatrix()
-testMatrix2()
-testMatrix3()
-testDirectedMatrix()
-testNoCycle()
-testNoCycle2()
-testDirectedNoCycle()
-testEmptyMatrix()
-testInvalidMatrix()
-testSelfLoop()
